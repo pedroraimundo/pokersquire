@@ -13,3 +13,7 @@ def features(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def squire(request):
+    return render(request, 'squire.html')
