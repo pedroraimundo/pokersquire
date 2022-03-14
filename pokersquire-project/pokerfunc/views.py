@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Stats
 
-# Create your views here.
+
+def squire(request):
+    stats = Stats.objects
+    return render(request, 'squire.html', {'stats': stats})
