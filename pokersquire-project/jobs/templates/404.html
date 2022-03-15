@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>About @ PokerSquire</title>
+    <title>Page not found - 404</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/heroes/">
 
@@ -55,21 +55,37 @@
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="mb-auto">
         <div>
-            <h3 class="float-xl-start mb-0">
-                <a href="{% url 'home' %}" onClick="return confirm('Current match stats will be lost if you this page. Proceed?')">
+            <h3 class="float-xl-center mb-0">
+                <a href="{% url 'home' %}">
                     <img src="https://see.fontimg.com/api/renderfont4/9Y6aZ/eyJyIjoiZnMiLCJoIjozMSwidyI6MTAwMCwiZnMiOjMxLCJmZ2MiOiIjRkZGRkZGIiwiYmdjIjoiIzA5MDgwOCIsInQiOjF9/cG9rZXJzcXVpcmU/momcake-thin.png" alt="Modern fonts">
                 </a>
             </h3>
             <nav class="nav nav-masthead justify-content-center float-md-end">
-                <a class="nav-link"  href="{% url 'home' %}" onClick="return confirm('Current match stats will be lost if you this page. Proceed?')">Home</a>
-                <a class="nav-link" href="{% url 'features' %}" onClick="return confirm('Current match stats will be lost if you this page. Proceed?')">Features</a>
-                <a class="nav-link" href="{% url 'about' %}" onClick="return confirm('Current match stats will be lost if you this page. Proceed?')">About</a>
             </nav>
         </div>
     </header>
     <hr>
     <main>
-        TODO - TIMER
+        <div class="b-example-divider"></div>
+
+        <div class="bg-dark text-secondary px-4 py-1 text-center">
+            <div class="py-5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-exclamation-octagon" viewBox="0 0 16 16">
+                    <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
+                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                </svg>
+                <br>
+                <br>
+                <h1 class="display-5 fw-bold text-white">404</h1>
+                <br>
+                <div class="col-lg-6 mx-auto">
+                    <p class="fs-5 mb-4">The requested page could not be found.</p>
+                    <p>I could swear it was somewhere around here, though...</p>
+                    <br>
+                    <p class="fs-5 mb-4"><a href="{% url 'home' %}" style="text-decoration:none;">Take me home!</a></p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- JavaScript Bundle with Popper -->

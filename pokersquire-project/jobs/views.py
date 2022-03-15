@@ -17,3 +17,11 @@ def about(request):
 
 def squire(request):
     return render(request, 'squire.html')
+
+
+def error_404(request, exception):
+    return render(request, '404.html')
+
+
+def error_500(exception):
+    return render('500.html')
