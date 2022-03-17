@@ -68,14 +68,13 @@
             }
 
             #blind-table-container button {
-            float: right;
+            float: left;
             border: none;
             padding: 5px 12px;
             margin: 10px 0;
             background: #27afd8;
             color: white;
             }
-
 
             #player-table-container {
             max-width: 400px;
@@ -100,7 +99,7 @@
             }
 
             #player-table-container button {
-            float: right;
+            float: left;
             border: none;
             padding: 5px 12px;
             margin: 10px 0;
@@ -132,7 +131,7 @@
     <hr>
     <main>
         <!-- Column for blind config -->
-        <div id="blind-table-container">
+        <div id="blind-table-container" align="left">
             <table id="blind-main-table" cellspacing="0">
                 <th colspan="5">Blind Setup</th>
                 <tr>
@@ -170,11 +169,11 @@
                     </td>
                 </tr>
             </table>
-            <button id="add-round">Add Round</button>
+            <button id="add-round"> + </button>
         </div>
 
         <!-- Column for player config -->
-        <div id="player-table-container">
+        <div id="player-table-container" align="right">
             <table id="player-main-table" cellspacing="0">
                 <th colspan="2">Dynamic Table</th>
                 <tr>
@@ -194,7 +193,7 @@
                     </td>
                 </tr>
             </table>
-            <button id="add-player">Add Player</button>
+            <button id="add-player"> + </button>
         </div>
     </main>
 
