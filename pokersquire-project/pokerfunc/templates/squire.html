@@ -25,28 +25,65 @@
 
 
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
+          .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+          }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
+          @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+              font-size: 3.5rem;
+            }
+          }
+
+          .link {
+            color:#F0F8FF;
+            text-decoration: none;
+            background-color: none;
+          }
+
+            .center-test {
+              border: 5px solid lightskyblue;
+              top: 50%;
+              left: 45%;
+              position: relative;
+              display: flex;
+              justify-content: center;
+            }
+
+        #countdown {
+          font-family:'sans-serif';
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #0c0c0d;
+          font-size: 70px;
+          width: 200px;
+          height: 200px;
+          background-color: #5e5c64;
+          border-radius: 50%;
         }
-      }
 
-      .link {
-        color:#F0F8FF;
-        text-decoration: none;
-        background-color: none;
-      }
+        .action-list {
+          display: flex;
+          position: relative;
+          justify-content: center;
+          gap: 30px;
+          margin-top: 30px;
+        }
 
+        button {
+          border: 5px solid lightskyblue;
+          background-color: #5e5c64;
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+          cursor: pointer;
+        }
     </style>
-
 
     <!-- Custom styles for this template -->
     <link href="heroes.css" rel="stylesheet">
@@ -70,14 +107,100 @@
     </header>
     <hr>
     <main>
-
+        <div class="center-test" id="countdown">
+            <div class="center-clock" id="countdown-number">10</div>
+        </div>
+        <div class="action-list">
+            <button id="stop">
+                <img src="https://img.icons8.com/ios-glyphs/30/000000/pause--v1.png" />
+            </button>
+            <button id="start">
+                <img src="https://img.icons8.com/ios-glyphs/30/000000/play--v1.png" />
+            </button>
+            <button id="reset">
+                <img src="https://img.icons8.com/ios-glyphs/30/000000/stop.png" />
+            </button>
+        </div>
+        <audio id="timeout_audio"></audio>
     </main>
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script>
+        // Select Countdown container
+        const countContainer = document.getElementById("countdown-number");
 
+        // Select action buttons
+        const startButton = document.getElementById("start");
+        const stopButton = document.getElementById("stop");
+        const resetButton = document.getElementById("reset");
+
+        // Select timeout Audio element
+        const timeoutAudio = document.getElementById("timeout_audio");
+
+        // variable to store count
+        var remainingTime = 10;
+
+        // variable to store time interval
+        var timer;
+
+        // Variable to track whether timer is running or not
+        var isStopped = true;
+
+        // Function to start Timer
+        const startTimer = () => {
+          if (isStopped) {
+            isStopped = false;
+            countContainer.innerHTML = remainingTime;
+            timer = setInterval(renderTime, 1000);
+          }
+        };
+
+        // Function to stop Timer
+        const stopTimer = () => {
+          isStopped = true;
+          if (timer) {
+            clearInterval(timer);
+          }
+        };
+
+        // Function to reset Timer
+        const resetTimer = () => {
+          isStopped = true;
+          clearInterval(timer);
+          remainingTime = 10;
+          countContainer.innerHTML = remainingTime;
+        };
+
+        // Initialize timeout sound
+        timeoutAudio.src = "http://soundbible.com/grab.php?id=1252&type=mp3";
+        timeoutAudio.load();
+
+        // Attach onclick event to buttons
+        startButton.onclick = startTimer;
+        resetButton.onclick = resetTimer;
+        stopButton.onclick = stopTimer;
+
+        // function to display time
+        const renderTime = () => {
+
+          // decement time
+          remainingTime -= 1;
+
+          // render count on the screen
+          countContainer.innerHTML = remainingTime;
+
+          // timeout on zero
+          if (remainingTime === 0) {
+            isStopped = true;
+            clearInterval(timer);
+
+            // Play audio on timeout
+            timeoutAudio.play();
+            remainingTime = 30;
+          }
+        };
     </script>
 
     <hr>

@@ -5,3 +5,8 @@ from .models import Stats
 def squire(request):
     stats = Stats.objects
     return render(request, 'squire.html', {'stats': stats})
+
+
+def settings(request):
+    return render(request, 'settings.html')
+
