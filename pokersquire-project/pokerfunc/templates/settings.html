@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>About @ PokerSquire</title>
+    <title>Game Settings @ PokerSquire</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/heroes/">
 
@@ -45,6 +45,25 @@
             background-color: none;
           }
 
+            table {
+              border-collapse:separate;
+              border:solid #87CEFA 1px;
+              border-radius:6px;
+            }
+
+            td, th {
+              border-left:solid #87CEFA 1px;
+            }
+
+            th {
+              background-color: blue;
+              border-top: none;
+            }
+
+            td:first-child, th:first-child {
+               border-left: none;
+            }
+
             #blind-table-container {
             max-width: 400px;
             padding: 5px;
@@ -57,12 +76,12 @@
             }
 
             #blind-main-table th {
-            background: #27afd8;
+            background: #4682B4;
             padding: 7px;
             }
 
             #blind-main-table td {
-            background: #4a9eb8;
+            background: #4a536b;
             text-align: center;
             padding: 7px;
             }
@@ -88,12 +107,12 @@
             }
 
             #player-main-table th {
-            background: #27afd8;
+            background: #4682B4;
             padding: 7px;
             }
 
             #player-main-table td {
-            background: #4a9eb8;
+            background: #4a536b;
             text-align: center;
             padding: 7px;
             }
@@ -106,13 +125,28 @@
             background: #27afd8;
             color: white;
             }
+
+            .floatLeft {
+              position: relative;
+              left: 230px;
+            }
+
+            .floatCenter {
+              position: relative;
+              left: 400px;
+            }
+
+            .floatRight {
+              position: relative;
+              left: -60px;
+              margin-top: 10px;
+            }
     </style>
 
     <!-- Custom styles for this template -->
     <link href="heroes.css" rel="stylesheet">
 </head>
 <body class="d-flex h-100 text-center text-white bg-dark">
-
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="mb-auto">
         <div>
@@ -130,16 +164,17 @@
     </header>
     <hr>
     <main>
+        <div style="display:block; width:100%;">
         <!-- Column for blind config -->
-        <div id="blind-table-container" align="left">
+        <div class="floatLeft" id="blind-table-container" style="width:33%; float: left; display: inline-block;">
             <table id="blind-main-table" cellspacing="0">
-                <th colspan="5">Blind Setup</th>
+                <th colspan="6">Blind Setup</th>
                 <tr>
                     <td>
                         <!-- Column for table number -->
                     </td>
                     <td>
-                        Blind Duration (minutes)
+                        Duration (minutes)
                     </td>
                     <td>
                         Small Blind
@@ -150,51 +185,103 @@
                     <td>
                         Ante
                     </td>
+                    <td>
+                        <!-- Column for the remove round button -->
+                    </td>
                 </tr>
                 <tr>
                     <td>
                         1
                     </td>
                     <td>
-                        <input type="number" size="5" value="15">
+                        <input type="number" size="5" value="15" style="text-align:center;">
                     </td>
                     <td>
-                        <input type="number" size="5" value="25">
+                        <input type="number" size="5" value="25" style="text-align:center;">
                     </td>
                     <td>
-                        <input type="number" size="5" value="50">
+                        <input type="number" size="5" value="50" style="text-align:center;">
                     </td>
                     <td>
-                        <input type="number" size="5" value="0">
+                        <input type="number" size="5" value="0" style="text-align:center;">
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold" onClick="alert('No additional rows can be deleted.')"> - </button>
                     </td>
                 </tr>
             </table>
-            <button id="add-round"> + </button>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-left">
+                <button id="add-round" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
+            </div>
         </div>
 
         <!-- Column for player config -->
-        <div id="player-table-container" align="right">
+        <div class="floatCenter" id="player-table-container" style="width:33%; float: left; display: inline-block;">
             <table id="player-main-table" cellspacing="0">
-                <th colspan="2">Dynamic Table</th>
+                <th colspan="3">Player List</th>
                 <tr>
                     <td>
-                        Player Name
+                        <!-- Column for outline draw -->
                     </td>
                     <td>
-                        Number of Rebuys
+                        <!-- Column for outline draw -->
+                    </td>
+                    <td>
+                        <!-- Column for outline draw -->
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" size="10" value="Player 1">
+                        <!-- Column for outline draw -->
                     </td>
                     <td>
-                        <input type="number" size="5" value="0">
+                        <input type="text" size="20" value="Player 1" style="text-align:center;">
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold" onClick="alert('No additional players can be removed.')"> - </button>
                     </td>
                 </tr>
             </table>
-            <button id="add-player"> + </button>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-left">
+                <button id="add-player" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
+            </div>
         </div>
+
+        <div class="floatRight" style="width:33%; float: right; display: inline-block;">
+            <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
+                <a href="{% url 'squire' %}" style="text-decoration:none;">
+                    <div class="link">
+                        Start
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-play-fill" viewBox="0 1 15 16">
+                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                        </svg>
+                    </div>
+                </a>
+            </button>
+        </div>
+
+        <div class="floatRight" style="width:33%; float: right; display: inline-block;">
+            <button type="button"  id="set-blind-defaults" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" >
+                <div class="link">
+                    Defaults
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-wrench" viewBox="0 1 15 16">
+                        <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"/>
+                    </svg>
+                </div>
+            </button>
+        </div>
+
+        <div class="floatRight" style="width:33%; float: right; display: inline-block;">
+            <button type="button" id="clear-settings" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
+                <div class="link">
+                    Clear
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eraser-fill" viewBox="0 1 15 16">
+                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                    </svg>
+                </div>
+            </button>
+        </div>
+    </div>
     </main>
 
     <!-- JavaScript Bundle with Popper -->
@@ -241,6 +328,7 @@
             blind_column2text.setAttribute("type", "number");
             blind_column2text.setAttribute("size", "5");
             blind_column2text.setAttribute("value", blind_duration);
+            blind_column2text.setAttribute("style", "text-align:center;");
             blind_column2.appendChild(blind_column2text);
 
             let blind_column3 = document.createElement("td");
@@ -248,6 +336,7 @@
             blind_column3text.setAttribute("type", "number");
             blind_column3text.setAttribute("size", "5");
             blind_column3text.setAttribute("value", small_blind);
+            blind_column3text.setAttribute("style", "text-align:center;");
             blind_column3.appendChild(blind_column3text);
 
             let blind_column4 = document.createElement("td");
@@ -255,6 +344,7 @@
             blind_column4text.setAttribute("type", "number");
             blind_column4text.setAttribute("size", "5");
             blind_column4text.setAttribute("value", big_blind);
+            blind_column4text.setAttribute("style", "text-align:center;");
             blind_column4.appendChild(blind_column4text);
 
             let blind_column5 = document.createElement("td");
@@ -262,7 +352,16 @@
             blind_column5text.setAttribute("type", "number");
             blind_column5text.setAttribute("size", "5");
             blind_column5text.setAttribute("value", ante);
+            blind_column5text.setAttribute("style", "text-align:center;");
             blind_column5.appendChild(blind_column5text);
+
+            let blind_column6 = document.createElement("td");
+            const blind_column6_button_text = document.createTextNode("-");
+            const blind_column6text = document.createElement("button");
+            blind_column6text.setAttribute("class", "btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold");
+            blind_column6text.setAttribute("onClick", "removeBlindTableRow();");
+            blind_column6text.appendChild(blind_column6_button_text);
+            blind_column6.appendChild(blind_column6text);
 
             //appends the first column to the new row
             row.appendChild(blind_column1);
@@ -279,28 +378,45 @@
             //appends the second column to the new row
             row.appendChild(blind_column5);
 
+            //appends the second column to the new row
+            row.appendChild(blind_column6);
+
             //appends the row to the table
             document.querySelector("#blind-main-table").appendChild(row);
             x++;
             round_num++;
-            small_blind*=2
-            big_blind*=2
+
+             if (small_blind == 50) {
+                small_blind*=1.5
+                big_blind*=1.5
+            }
+            else if (small_blind == 75) {
+                small_blind = 100
+                big_blind = 200
+            } else if (small_blind == 200) {
+                small_blind = 300
+                big_blind = 600
+            } else if (small_blind == 300) {
+                small_blind = 500
+                big_blind = 1000
+            } else {
+                small_blind*=2
+                big_blind*=2
+            }
         	};
       	}
 
-                // Script for blind-data
+        // Script for player-data
         //Adds a click listener to the add-player button
         document.querySelector("#add-player").addEventListener("click", () => {
 
         //calls the addPlayer() method on clicking the button
-        addPlayer();
+            addPlayer();
         });
 
         //initializing the row counter
         let y = 1;
         let player_num = 2;
-        let rebuy_quantity = 1;
-
 
         const addPlayer = () => {
 
@@ -312,25 +428,28 @@
             //creates a new row element
             let row = document.createElement("tr");
 
-            //creates a new column element
             let player_column1 = document.createElement("td");
+            const player_column1text = document.createTextNode("");
+            player_column1.appendChild(player_column1text);
+
+            //creates a new column element
+            let player_column2 = document.createElement("td");
 
             //create text for the column element
-            const player_column1text = document.createElement("input");
-            player_column1text.setAttribute("type", "text");
-            player_column1text.setAttribute("size", "10");
-            player_column1text.setAttribute("value", player_name);
-            player_column1.appendChild(player_column1text);
-
-            //appends the text to the column element
-            player_column1.appendChild(player_column1text);
-
-            let player_column2 = document.createElement("td");
             const player_column2text = document.createElement("input");
-            player_column2text.setAttribute("type", "number");
-            player_column2text.setAttribute("size", "5");
-            player_column2text.setAttribute("value", rebuy_quantity);
+            player_column2text.setAttribute("type", "text");
+            player_column2text.setAttribute("size", "20");
+            player_column2text.setAttribute("value", player_name);
+            player_column2text.setAttribute("style", "text-align:center;");
             player_column2.appendChild(player_column2text);
+
+            let player_column3 = document.createElement("td");
+            const player_column3_button_text = document.createTextNode("-");
+            const player_column3text = document.createElement("button");
+            player_column3text.setAttribute("class", "btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold");
+            player_column3text.setAttribute("onClick", "removePlayerTableRow();");
+            player_column3text.appendChild(player_column3_button_text);
+            player_column3.appendChild(player_column3text);
 
             //appends the first column to the new row
             row.appendChild(player_column1);
@@ -338,17 +457,101 @@
             //appends the second column to the new row
             row.appendChild(player_column2);
 
+            //appends the second column to the new row
+            row.appendChild(player_column3);
+
             //appends the row to the table
             document.querySelector("#player-main-table").appendChild(row);
             y++;
             player_num++;
         	};
       	}
+
+        function removeBlindTableRow() {
+
+            // gathering html table name and row count
+            var blind_table = document.getElementById("blind-main-table");
+            var blind_table_row_count = blind_table.rows.length;
+
+            // resetting stats from table for proper dynamic generation of values
+            x--;
+            round_num--;
+
+            if (small_blind == 50) {
+                small_blind/=2
+                big_blind/=2
+            }
+            else if (small_blind == 75) {
+                small_blind = 50
+                big_blind = 100
+            } else if (small_blind == 100) {
+                small_blind = 75
+                big_blind = 150
+            } else if (small_blind == 300) {
+                small_blind = 200
+                big_blind = 400
+            } else if (small_blind == 500) {
+                small_blind = 300
+                big_blind = 600
+            } else {
+                small_blind/=2
+                big_blind/=2
+            }
+
+            // deleting newest row
+            document.getElementById("blind-main-table").deleteRow(blind_table_row_count-1);
+        }
+
+        function removePlayerTableRow() {
+
+            // gathering html table name and row count
+            var player_table = document.getElementById("player-main-table");
+            var player_table_row_count = player_table.rows.length;
+
+            // resetting stats from table for proper dynamic generation of values
+            y--;
+            player_num--;
+
+            // deleting newest row
+            document.getElementById("player-main-table").deleteRow(player_table_row_count-1);
+        }
+
+
+      	document.querySelector("#set-blind-defaults").addEventListener("click", () => {
+            setBlindDefaults();
+        });
+
+        function setBlindDefaults() {
+            if (confirm('Override current settings to recommended game settings?') == true) {
+                if (round_num <= 9) {
+                    for (let i = round_num; i <= 9; i++) {
+                        addRound();
+                    }
+                }
+                if (player_num <= 8) {
+                    for (let j = player_num; j <= 8; j++) {
+                        addPlayer();
+                    }
+                }
+            }
+        }
+
+      	document.querySelector("#clear-settings").addEventListener("click", () => {
+            clearSettings();
+        });
+
+        function clearSettings() {
+            if (confirm('Are you sure you want to erase all the current game settings?') == true) {
+                window.location.reload();
+            }
+    };
     </script>
 
-    <hr>
-    <footer class="mt-auto text-white-50 text-center">
-        <p style="text-align:center">ⓒ Pedro Raimundo - {% now "Y" %}</p>
-    </footer>
 
+    <div class="footer">
+        <hr>
+        <footer class="mt-auto text-white-50 text-center">
+            <p style="text-align:center">ⓒ Pedro Raimundo - {% now "Y" %}</p>
+        </footer>
+    </div>
 </html>
