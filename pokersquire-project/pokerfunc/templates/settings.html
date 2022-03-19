@@ -477,6 +477,15 @@
             x--;
             round_num--;
 
+            adjustBlindValue();
+
+            // deleting newest row
+            document.getElementById("blind-main-table").deleteRow(blind_table_row_count-1);
+        }
+
+        function adjustBlindValue() {
+
+            // When a row is removed, this function is called to correct the default blind values
             if (small_blind == 50) {
                 small_blind/=2
                 big_blind/=2
@@ -497,9 +506,6 @@
                 small_blind/=2
                 big_blind/=2
             }
-
-            // deleting newest row
-            document.getElementById("blind-main-table").deleteRow(blind_table_row_count-1);
         }
 
         function removePlayerTableRow() {
@@ -523,6 +529,7 @@
 
         function setBlindDefaults() {
             if (confirm('Override current settings to recommended game settings?') == true) {
+                // clearSettings();
                 if (round_num <= 9) {
                     for (let i = round_num; i <= 9; i++) {
                         addRound();
@@ -542,7 +549,19 @@
 
         function clearSettings() {
             if (confirm('Are you sure you want to erase all the current game settings?') == true) {
-                window.location.reload();
+               if ((round_num != 1) && (round_num != 2)) {
+                   for (let i = 0; i <= round_num-1; i++) {
+                        removeBlindTableRow();
+                   }
+                   //round_num = 1;
+               }
+               if ((player_num != 1) && (player_num != 2)) {
+                   for (let j = 0; j <= player_num-1; j++) {
+                       removePlayerTableRow();
+                   }
+                   //player_num = 1;
+               }
+
             }
     };
     </script>
