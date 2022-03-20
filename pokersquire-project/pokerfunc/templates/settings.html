@@ -288,281 +288,312 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script>
-        // Script for blind-data
-        //Adds a click listener to the add-round button
-        document.querySelector("#add-round").addEventListener("click", () => {
+    // setting click listeners to call respective functions:
 
-        //calls the addRound() method on clicking the button
-        addRound();
-        });
+    document.querySelector("#add-round").addEventListener("click", () => {
+      addRound();
+    });
 
-        //initializing the row counter
-        let x = 1;
-        let round_num = 2;
-        let blind_duration = 15;
-        let small_blind = 50;
-        let big_blind = 100;
-        let ante = 0;
+    document.querySelector("#add-player").addEventListener("click", () => {
+      addPlayer();
+    });
 
-        const addRound = () => {
+    document.querySelector("#set-blind-defaults").addEventListener("click", () => {
+      setBlindDefaults();
+    });
 
-        	if (round_num >= 16){
-          	alert("The maximum number of rounds allowed is "+ (round_num-1) +".")
-            }
-            else {
-            //creates a new row element
-            let row = document.createElement("tr");
-
-            //creates a new column element
-            let blind_column1 = document.createElement("td");
-
-            //create text for the column element
-            const blind_column1text = document.createTextNode(round_num);
-
-            //appends the text to the column element
-            blind_column1.appendChild(blind_column1text);
+    document.querySelector("#clear-settings").addEventListener("click", () => {
+      clearSettings();
+    });
 
 
-            let blind_column2 = document.createElement("td");
-            const blind_column2text = document.createElement("input");
-            blind_column2text.setAttribute("type", "number");
-            blind_column2text.setAttribute("size", "5");
-            blind_column2text.setAttribute("value", blind_duration);
-            blind_column2text.setAttribute("style", "text-align:center;");
-            blind_column2.appendChild(blind_column2text);
+    // initializing global variables
 
-            let blind_column3 = document.createElement("td");
-            const blind_column3text = document.createElement("input");
-            blind_column3text.setAttribute("type", "number");
-            blind_column3text.setAttribute("size", "5");
-            blind_column3text.setAttribute("value", small_blind);
-            blind_column3text.setAttribute("style", "text-align:center;");
-            blind_column3.appendChild(blind_column3text);
+    // addRound relevant variables:
+    let round_num = 1;
+    let blind_duration = 15;
+    let small_blind = 25;
+    let big_blind = 50;
+    let ante = 0;
+    let first_blind = true;
 
-            let blind_column4 = document.createElement("td");
-            const blind_column4text = document.createElement("input");
-            blind_column4text.setAttribute("type", "number");
-            blind_column4text.setAttribute("size", "5");
-            blind_column4text.setAttribute("value", big_blind);
-            blind_column4text.setAttribute("style", "text-align:center;");
-            blind_column4.appendChild(blind_column4text);
+    // addPlayer relevant variables:
+    let player_num = 1;
 
-            let blind_column5 = document.createElement("td");
-            const blind_column5text = document.createElement("input");
-            blind_column5text.setAttribute("type", "number");
-            blind_column5text.setAttribute("size", "5");
-            blind_column5text.setAttribute("value", ante);
-            blind_column5text.setAttribute("style", "text-align:center;");
-            blind_column5.appendChild(blind_column5text);
+    // function flags
+    let raise_blind_flag = true;
 
-            let blind_column6 = document.createElement("td");
-            const blind_column6_button_text = document.createTextNode("-");
-            const blind_column6text = document.createElement("button");
-            blind_column6text.setAttribute("class", "btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold");
-            blind_column6text.setAttribute("onClick", "removeBlindTableRow();");
-            blind_column6text.appendChild(blind_column6_button_text);
-            blind_column6.appendChild(blind_column6text);
 
-            //appends the first column to the new row
-            row.appendChild(blind_column1);
+    // lambda functions, addRound, add Player
 
-            //appends the second column to the new row
-            row.appendChild(blind_column2);
+    // addRound
+    const addRound = () => {
 
-            //appends the second column to the new row
-            row.appendChild(blind_column3);
+      round_num++;
 
-            //appends the second column to the new row
-            row.appendChild(blind_column4);
+      if (round_num >= 16) {
+        alert("The maximum number of rounds allowed is "+ (round_num-1) +".")
+        round_num = 15;
+      } else {
 
-            //appends the second column to the new row
-            row.appendChild(blind_column5);
+        raise_blind_flag = true;
+        adjustBlindValue(raise_blind_flag);
 
-            //appends the second column to the new row
-            row.appendChild(blind_column6);
+        //creates a new row element
+        let row = document.createElement("tr");
 
-            //appends the row to the table
-            document.querySelector("#blind-main-table").appendChild(row);
-            x++;
-            round_num++;
+        //creates a new column element
+        let blind_column1 = document.createElement("td");
+        //create text for the column element
+        const blind_column1text = document.createTextNode(round_num);
+        //appends the text to the column element
+        blind_column1.appendChild(blind_column1text);
 
-             if (small_blind == 50) {
-                small_blind*=1.5
-                big_blind*=1.5
-            }
-            else if (small_blind == 75) {
-                small_blind = 100
-                big_blind = 200
-            } else if (small_blind == 200) {
-                small_blind = 300
-                big_blind = 600
-            } else if (small_blind == 300) {
-                small_blind = 500
-                big_blind = 1000
-            } else {
-                small_blind*=2
-                big_blind*=2
-            }
-        	};
-      	}
+        // creates the column element and the input section
+        let blind_column2 = document.createElement("td");
+        const blind_column2text = document.createElement("input");
 
-        // Script for player-data
-        //Adds a click listener to the add-player button
-        document.querySelector("#add-player").addEventListener("click", () => {
+        // sets attributes for the input value and adds to the column
+        blind_column2text.setAttribute("type", "number");
+        blind_column2text.setAttribute("size", "5");
+        blind_column2text.setAttribute("value", blind_duration);
+        blind_column2text.setAttribute("style", "text-align:center;");
+        blind_column2.appendChild(blind_column2text);
 
-        //calls the addPlayer() method on clicking the button
+        // similar setup for additional columns
+        let blind_column3 = document.createElement("td");
+        const blind_column3text = document.createElement("input");
+
+        blind_column3text.setAttribute("type", "number");
+        blind_column3text.setAttribute("size", "5");
+        blind_column3text.setAttribute("value", small_blind);
+        blind_column3text.setAttribute("style", "text-align:center;");
+        blind_column3.appendChild(blind_column3text);
+
+        // similar setup for additional columns
+        let blind_column4 = document.createElement("td");
+        const blind_column4text = document.createElement("input");
+
+        blind_column4text.setAttribute("type", "number");
+        blind_column4text.setAttribute("size", "5");
+        blind_column4text.setAttribute("value", big_blind);
+        blind_column4text.setAttribute("style", "text-align:center;");
+        blind_column4.appendChild(blind_column4text);
+
+        // similar setup for additional columns
+        let blind_column5 = document.createElement("td");
+        const blind_column5text = document.createElement("input");
+
+        blind_column5text.setAttribute("type", "number");
+        blind_column5text.setAttribute("size", "5");
+        blind_column5text.setAttribute("value", ante);
+        blind_column5text.setAttribute("style", "text-align:center;");
+        blind_column5.appendChild(blind_column5text);
+
+        // similar setup for additional columns
+        let blind_column6 = document.createElement("td");
+        const blind_column6_button_text = document.createTextNode("-");
+        const blind_column6text = document.createElement("button");
+
+        blind_column6text.setAttribute("class", "btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold");
+        blind_column6text.setAttribute("onClick", "removeBlindTableRow();");
+        blind_column6text.appendChild(blind_column6_button_text);
+        blind_column6.appendChild(blind_column6text);
+
+        // append generated columns to the new row
+        row.appendChild(blind_column1);
+        row.appendChild(blind_column2);
+        row.appendChild(blind_column3);
+        row.appendChild(blind_column4);
+        row.appendChild(blind_column5);
+        row.appendChild(blind_column6);
+        document.querySelector("#blind-main-table").appendChild(row);
+
+      };
+    }
+
+
+    // addPlayer
+    const addPlayer = () => {
+
+      player_num++;
+
+      let player_name = "Player " + player_num + "";
+
+      if (player_num >= 16){
+        alert("The maximum number of rounds allowed is "+ (player_num-1) +".")
+        player_num = 15;
+      } else {
+        //creates a new row element
+        let row = document.createElement("tr");
+
+        //creates a new column element
+        let player_column1 = document.createElement("td");
+
+        //create text for the column element
+        const player_column1text = document.createTextNode("");
+        player_column1.appendChild(player_column1text);
+
+        // creates the column element and the input section
+        let player_column2 = document.createElement("td");
+        const player_column2text = document.createElement("input");
+
+        // sets attributes for the input value and adds to the column
+        player_column2text.setAttribute("type", "text");
+        player_column2text.setAttribute("size", "20");
+        player_column2text.setAttribute("value", player_name);
+        player_column2text.setAttribute("style", "text-align:center;");
+        player_column2.appendChild(player_column2text);
+
+        // similar setup for additional columns
+        let player_column3 = document.createElement("td");
+        const player_column3_button_text = document.createTextNode("-");
+        const player_column3text = document.createElement("button");
+
+        player_column3text.setAttribute("class", "btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold");
+        player_column3text.setAttribute("onClick", "removePlayerTableRow();");
+        player_column3text.appendChild(player_column3_button_text);
+        player_column3.appendChild(player_column3text);
+
+        // append generated columns to the new row
+        row.appendChild(player_column1);
+        row.appendChild(player_column2);
+        row.appendChild(player_column3);
+        document.querySelector("#player-main-table").appendChild(row);
+
+      };
+    }
+
+
+    // function section
+
+    function removeBlindTableRow() {
+
+      // gathering html table name and row count
+      var blind_table = document.getElementById("blind-main-table");
+      var blind_table_row_count = blind_table.rows.length;
+
+      // resetting stats from table for proper dynamic generation of values
+      round_num--;
+
+      raise_blind_flag = false;
+      adjustBlindValue(raise_blind_flag);
+
+      // deleting newest row
+      document.getElementById("blind-main-table").deleteRow(blind_table_row_count-1);
+    }
+
+    function adjustBlindValue(raise_blind_flag) {
+
+      // this function will lower or raise each blind value based on the default
+      // ratio below. future options will allow full custom values as well
+
+      // if the raise flag is true, the value will be raised, else, lowered
+      if (raise_blind_flag == true) {
+
+        if (small_blind < 25) {
+          alert('The minimum blind must be at least 25');
+          small_blind = 25;
+        }
+
+        switch (small_blind) {
+          case 50:
+            small_blind = 75;
+            big_blind = 150;
+            break;
+          case 75:
+            small_blind = 100;
+            big_blind = 200;
+            break;
+          case 200:
+            small_blind = 300;
+            big_blind = 600;
+            break;
+          case 300:
+            small_blind = 500;
+            big_blind = 1000;
+            break;
+          default:
+            small_blind*=2;
+            big_blind*=2;
+            break;
+        }
+      } else {
+        switch (small_blind) {
+          case 50:
+            small_blind = 25;
+            big_blind = 50;
+            break;
+          case 75:
+            small_blind = 50;
+            big_blind = 100;
+            break;
+          case 100:
+            small_blind = 75;
+            big_blind = 150;
+            break;
+          case 300:
+            small_blind = 200;
+            big_blind = 400;
+            break;
+          case 500:
+            small_blind = 300;
+            big_blind = 600;
+            break;
+          default:
+            small_blind/=2;
+            big_blind/=2;
+            break;
+        }
+      }
+    }
+
+    function removePlayerTableRow() {
+      // gathering html table name and row count
+      var player_table = document.getElementById("player-main-table");
+      var player_table_row_count = player_table.rows.length;
+
+      // resetting stats from table for consistent dynamic generation of values
+      player_num--;
+
+      // deleting newest row
+      document.getElementById("player-main-table").deleteRow(player_table_row_count-1);
+    }
+
+    function setBlindDefaults() {
+        // wiping out current settings
+        clearSettings();
+
+        // adding 9 additional rounds based on default blind value ratio
+        if (round_num <= 9) {
+          for (let i = round_num; i <= 9; i++) {
+            addRound();
+          }
+        }
+        if (player_num <= 8) {
+          for (let j = player_num; j <= 8; j++) {
             addPlayer();
-        });
-
-        //initializing the row counter
-        let y = 1;
-        let player_num = 2;
-
-        const addPlayer = () => {
-
-          let player_name = "Player " + player_num + "";
-        	if (player_num >= 16){
-          	alert("The maximum number of rounds allowed is "+ (player_num-1) +".")
-            }
-            else {
-            //creates a new row element
-            let row = document.createElement("tr");
-
-            let player_column1 = document.createElement("td");
-            const player_column1text = document.createTextNode("");
-            player_column1.appendChild(player_column1text);
-
-            //creates a new column element
-            let player_column2 = document.createElement("td");
-
-            //create text for the column element
-            const player_column2text = document.createElement("input");
-            player_column2text.setAttribute("type", "text");
-            player_column2text.setAttribute("size", "20");
-            player_column2text.setAttribute("value", player_name);
-            player_column2text.setAttribute("style", "text-align:center;");
-            player_column2.appendChild(player_column2text);
-
-            let player_column3 = document.createElement("td");
-            const player_column3_button_text = document.createTextNode("-");
-            const player_column3text = document.createElement("button");
-            player_column3text.setAttribute("class", "btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold");
-            player_column3text.setAttribute("onClick", "removePlayerTableRow();");
-            player_column3text.appendChild(player_column3_button_text);
-            player_column3.appendChild(player_column3text);
-
-            //appends the first column to the new row
-            row.appendChild(player_column1);
-
-            //appends the second column to the new row
-            row.appendChild(player_column2);
-
-            //appends the second column to the new row
-            row.appendChild(player_column3);
-
-            //appends the row to the table
-            document.querySelector("#player-main-table").appendChild(row);
-            y++;
-            player_num++;
-        	};
-      	}
-
-        function removeBlindTableRow() {
-
-            // gathering html table name and row count
-            var blind_table = document.getElementById("blind-main-table");
-            var blind_table_row_count = blind_table.rows.length;
-
-            // resetting stats from table for proper dynamic generation of values
-            x--;
-            round_num--;
-
-            adjustBlindValue();
-
-            // deleting newest row
-            document.getElementById("blind-main-table").deleteRow(blind_table_row_count-1);
+          }
         }
+      }
 
-        function adjustBlindValue() {
+    function clearSettings() {
+      if (confirm('Are you sure you want to erase all the current game settings?') == true) {
 
-            // When a row is removed, this function is called to correct the default blind values
-            if (small_blind == 50) {
-                small_blind/=2
-                big_blind/=2
-            }
-            else if (small_blind == 75) {
-                small_blind = 50
-                big_blind = 100
-            } else if (small_blind == 100) {
-                small_blind = 75
-                big_blind = 150
-            } else if (small_blind == 300) {
-                small_blind = 200
-                big_blind = 400
-            } else if (small_blind == 500) {
-                small_blind = 300
-                big_blind = 600
-            } else {
-                small_blind/=2
-                big_blind/=2
-            }
+        // calling functions to remove all columns but the first one for both tables
+        if (round_num != 1) {
+          for (let i = round_num-1; i >= 1; i--) {
+            removeBlindTableRow();
+          }
+          round_num = 1;
         }
-
-        function removePlayerTableRow() {
-
-            // gathering html table name and row count
-            var player_table = document.getElementById("player-main-table");
-            var player_table_row_count = player_table.rows.length;
-
-            // resetting stats from table for proper dynamic generation of values
-            y--;
-            player_num--;
-
-            // deleting newest row
-            document.getElementById("player-main-table").deleteRow(player_table_row_count-1);
+        if (player_num != 1) {
+          for (let j = player_num-1; j >= 1; j--) {
+            removePlayerTableRow();
+          }
+          player_num = 1;
         }
-
-
-      	document.querySelector("#set-blind-defaults").addEventListener("click", () => {
-            setBlindDefaults();
-        });
-
-        function setBlindDefaults() {
-            if (confirm('Override current settings to recommended game settings?') == true) {
-                // clearSettings();
-                if (round_num <= 9) {
-                    for (let i = round_num; i <= 9; i++) {
-                        addRound();
-                    }
-                }
-                if (player_num <= 8) {
-                    for (let j = player_num; j <= 8; j++) {
-                        addPlayer();
-                    }
-                }
-            }
-        }
-
-      	document.querySelector("#clear-settings").addEventListener("click", () => {
-            clearSettings();
-        });
-
-        function clearSettings() {
-            if (confirm('Are you sure you want to erase all the current game settings?') == true) {
-               if ((round_num != 1) && (round_num != 2)) {
-                   for (let i = 0; i <= round_num-1; i++) {
-                        removeBlindTableRow();
-                   }
-                   //round_num = 1;
-               }
-               if ((player_num != 1) && (player_num != 2)) {
-                   for (let j = 0; j <= player_num-1; j++) {
-                       removePlayerTableRow();
-                   }
-                   //player_num = 1;
-               }
-
-            }
+      }
     };
     </script>
 
