@@ -47,7 +47,7 @@
 
         .floatLeft {
             position: relative;
-            left: -50px;
+            left: -450px;
         }
 
         .floatCenter {
@@ -61,35 +61,57 @@
             margin-top: 10px;
         }
 
-        #div-with-bg
-        {
-            background: url('https://clipground.com/images/red-poker-chip-png-4.png');
+        .base-timer {
+          position: relative;
+          width: 300px;
+          height: 300px;
         }
 
-        .center-test {
-            border: 5px solid #4682B4;
-            top: 50%;
-            left: 45%;
-            position: relative;
-            display: flex;
-            justify-content: center;
+        .base-timer__svg {
+          transform: scaleX(-1);
         }
 
-        #countdown {
-            font-family: 'sans-serif';
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #0c0c0d;
-            font-size: 70px;
-            width: 200px;
-            height: 200px;
-            background-color: #2e3b59db;
-            border-radius: 50%;
+        .base-timer__circle {
+          fill: none;
+          stroke: none;
         }
 
-        .bgimg-test {
-            background-image: url("https://clipground.com/images/red-poker-chip-png-4.png");
+        .base-timer__path-elapsed {
+          stroke-width: 7px;
+          stroke: grey;
+        }
+
+        .base-timer__path-remaining {
+          stroke-width: 7px;
+          stroke-linecap: round;
+          transform: rotate(90deg);
+          transform-origin: center;
+          transition: 1s linear all;
+          fill-rule: nonzero;
+          stroke: currentColor;
+        }
+
+        .base-timer__path-remaining.green {
+          color: rgb(65, 184, 131);
+        }
+
+        .base-timer__path-remaining.orange {
+          color: orange;
+        }
+
+        .base-timer__path-remaining.red {
+          color: red;
+        }
+
+        .base-timer__label {
+          position: absolute;
+          width: 300px;
+          height: 300px;
+          top: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 48px;
         }
 
         .action-list {
@@ -101,8 +123,8 @@
         }
 
         button {
-            border: 5px solid #4682B4;
-            background-color: #7684a6;
+            border: 3px solid #20c997;
+            background-color: #E0FFFF;
             border-radius: 50%;
             width: 60px;
             height: 60px;
@@ -132,19 +154,24 @@
     </header>
     <hr>
     <main>
-        <div class="floatLeft" id="blind-table-container" style="width:33%; float: left; display: inline-block;">
-            <div class="center-test" id="countdown">
-                <div class="center-clock" id="countdown-number">30</div>
-            </div>
-                <div class="action-list" style="position:relative; left: 63px; margin-top: 10px;">
-                    <button id="stop">
-                        <img src="https://img.icons8.com/ios-glyphs/30/000000/pause--v1.png" />
-                    </button>
-                    <button id="start">
-                        <img src="https://img.icons8.com/ios-glyphs/30/000000/play--v1.png" />
-                    </button>
+        <div class="floatLeft" id="blind-table-container" style="width:33%; float: center; display: inline-block;">
+                <div id="app"></div>
+                <div class="action-list" style="position:relative; left: -168px; margin-top: 10px;">
+                    <div class="clickableList">
+                        <button id="start-pause">
+                            <svg id="svgPlay" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
+                                <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/>
+                            </svg>
+                            <svg id="svgPause" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-pause" viewBox="0 0 16 16">
+                                <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                            </svg>
+                        </button>
+                    </div>
                     <button id="reset">
-                        <img src="https://img.icons8.com/ios-glyphs/30/000000/stop.png" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                        </svg>
                     </button>
                 </div>
                 <audio id="timeout_audio"></audio>
@@ -153,81 +180,212 @@
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <script>
-        // Select Countdown container
-        const countContainer = document.getElementById("countdown-number");
+        // Credit: Mateusz Rybczonec (timer/aniation) / Pedro Raimundo (action buttons integration)
 
-        // Select action buttons
-        const startButton = document.getElementById("start");
-        const stopButton = document.getElementById("stop");
+        // variables related to the timer animation
+        const FULL_DASH_ARRAY = 283;
+        const WARNING_THRESHOLD = 10;
+        const DANGER_THRESHOLD = 5;
+
+        const COLOR_CODES = {
+          info: {
+            color: "green"
+          },
+          warning: {
+            color: "orange",
+            threshold: WARNING_THRESHOLD
+          },
+          danger: {
+            color: "red",
+            threshold: DANGER_THRESHOLD
+          }
+        };
+
+
+        // function variables
+        let TIME_LIMIT = 15;
+        let timePassed = 0;
+        let timeLeft = TIME_LIMIT;
+        let timerInterval = null;
+        let remainingPathColor = COLOR_CODES.info.color;
+        let playButtonMode = true;
+
+
+        // setting the html for the timer
+        document.getElementById("app").innerHTML = `
+                <div class="base-timer">
+                  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <g class="base-timer__circle">
+                      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+                      <path
+                        id="base-timer-path-remaining"
+                        stroke-dasharray="283"
+                        class="base-timer__path-remaining ${remainingPathColor}"
+                        d="
+                          M 50, 50
+                          m -45, 0
+                          a 45,45 0 1,0 90,0
+                          a 45,45 0 1,0 -90,0
+                        "
+                      ></path>
+                    </g>
+                  </svg>
+                  <span id="base-timer-label" class="base-timer__label">${formatTime(
+                    timeLeft
+                  )}</span>
+                </div>
+                `;
+
+        // select action buttons
+        const startButton = document.getElementById("start-pause");
         const resetButton = document.getElementById("reset");
 
-        // Select timeout Audio element
+        // select timeout audio element
         const timeoutAudio = document.getElementById("timeout_audio");
 
-        // variable to store count
-        var remainingTime = 30;
-
-        // variable to store time interval
-        var timer;
-
-        // Variable to track whether timer is running or not
-        var isStopped = true;
-
-        // Function to start Timer
-        const startTimer = () => {
-          if (isStopped) {
-            isStopped = false;
-            countContainer.innerHTML = remainingTime;
-            timer = setInterval(renderTime, 1000);
-          }
-        };
-
-        // Function to stop Timer
-        const stopTimer = () => {
-          isStopped = true;
-          if (timer) {
-            clearInterval(timer);
-          }
-        };
-
-        // Function to reset Timer
-        const resetTimer = () => {
-          isStopped = true;
-          clearInterval(timer);
-          remainingTime = 30;
-          countContainer.innerHTML = remainingTime;
-        };
-
-        // Initialize timeout sound
+        // initialize timeout sound
         timeoutAudio.src = "http://soundbible.com/grab.php?id=1252&type=mp3";
         timeoutAudio.load();
 
-        // Attach onclick event to buttons
-        startButton.onclick = startTimer;
-        resetButton.onclick = resetTimer;
-        stopButton.onclick = stopTimer;
+        // variable to track whether timer is running or not
+        var isStopped = true;
 
-        // function to display time
-        const renderTime = () => {
-
-          // decement time
-          remainingTime -= 1;
-
-          // render count on the screen
-          countContainer.innerHTML = remainingTime;
-
-          // timeout on zero
-          if (remainingTime === 0) {
-            isStopped = true;
-            clearInterval(timer);
-
-            // Play audio on timeout
-            timeoutAudio.play();
-            remainingTime = 30;
+        // function to stop timer
+        const pauseTimer = () => {
+          isStopped = true;
+          if (timerInterval) {
+            clearInterval(timerInterval);
           }
+
         };
+
+        // function to reset timer (system)
+        const resetTimer = () => {
+
+              // if the play button is currently set to 'pause', it will be reverted to play while resetting
+              if (isStopped == false) {
+                document.getElementById("start-pause").click();
+              }
+
+              isStopped = true;
+              clearInterval(timerInterval);
+              clearInterval(timeLeft);
+              timePassed = 0;
+              timeLeft = 15;
+              document.getElementById("base-timer-label").innerHTML = formatTime(
+                timeLeft
+              );
+              setCircleDasharray();
+              setRemainingPathColor(timeLeft);
+            };
+
+        // function when time ends
+        function onTimesUp() {
+          resetTimer();
+        }
+
+        // function to reset timer (triggered by player)
+        function playerTimerReset() {
+          let confirmation = confirm("Current timer will be reset. Continue?");
+          if (confirmation == true) {
+            resetTimer();
+          }
+        }
+
+        // function to start the clock
+        function startTimer() {
+          if (isStopped) {
+            isStopped = false;
+            timerInterval = setInterval(() => {
+              timePassed = timePassed += 1;
+              timeLeft = TIME_LIMIT - timePassed;
+              document.getElementById("base-timer-label").innerHTML = formatTime(
+                timeLeft
+              );
+              setCircleDasharray();
+              setRemainingPathColor(timeLeft);
+
+              if (timeLeft === 0) {
+                timeoutAudio.play();
+                onTimesUp();
+              }
+            }, 1000);
+          } else {
+            pauseTimer();
+          }
+        }
+
+        // function to format the time
+        function formatTime(time) {
+          const minutes = Math.floor(time / 60);
+          let seconds = time % 60;
+
+          if (seconds < 10) {
+            seconds = `0${seconds}`;
+          }
+
+          return `${minutes}:${seconds}`;
+        }
+
+        // function to set the color change
+        function setRemainingPathColor(timeLeft) {
+          const { danger, warning, info } = COLOR_CODES;
+          if (timeLeft <= danger.threshold) {
+            document
+              .getElementById("base-timer-path-remaining")
+              .classList.remove(warning.color);
+            document
+              .getElementById("base-timer-path-remaining")
+              .classList.add(danger.color);
+          } else if (timeLeft <= warning.threshold) {
+            document
+              .getElementById("base-timer-path-remaining")
+              .classList.remove(info.color);
+            document
+              .getElementById("base-timer-path-remaining")
+              .classList.add(warning.color);
+          } else if ((timeLeft >= danger.threshold) && (timeLeft >= warning.threshold)) {
+						document
+              .getElementById("base-timer-path-remaining")
+              .classList.remove(warning.color);
+            document
+              .getElementById("base-timer-path-remaining")
+              .classList.remove(danger.color);
+            document
+              .getElementById("base-timer-path-remaining")
+              .classList.add(info.color);
+          }
+        }
+
+        // functions to set the clock animation
+        function calculateTimeFraction() {
+          const rawTimeFraction = timeLeft / TIME_LIMIT;
+          return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+        }
+
+        function setCircleDasharray() {
+          const circleDasharray = `${(
+            calculateTimeFraction() * FULL_DASH_ARRAY
+          ).toFixed(0)} 283`;
+                    document
+                      .getElementById("base-timer-path-remaining")
+                      .setAttribute("stroke-dasharray", circleDasharray);
+                  }
+
+        // attaching onclick event to buttons
+         startButton.onclick = startTimer;
+         resetButton.onclick = playerTimerReset;
+
+        // icon swap on click for the play/pause button
+        $('.clickableList').click(function(event) {
+           event.preventDefault();
+           $('#svgPlay').toggle();
+           $('#svgPause').toggle();
+        });
+
     </script>
 
     <hr>
