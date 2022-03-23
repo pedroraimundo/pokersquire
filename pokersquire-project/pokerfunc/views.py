@@ -10,3 +10,6 @@ def squire(request):
 def settings(request):
     return render(request, 'settings.html')
 
+
+def results(request):
+    return render(request, 'results.html')

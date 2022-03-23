@@ -19,6 +19,10 @@ def squire(request):
     return render(request, 'squire.html')
 
 
+def results(request):
+    return render(request, 'results.html')
+
+
 def error_404(request, exception):
     return render(request, '404.html')
 

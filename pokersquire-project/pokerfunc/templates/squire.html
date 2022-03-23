@@ -121,7 +121,7 @@
             margin-top: 30px;
         }
 
-        button {
+        .action-button {
             border: 3px solid #87CEFA;
             background-color: #E0FFFF;
             border-radius: 50%;
@@ -203,7 +203,7 @@
             <div id="app"></div>
                 <div class="action-list" style="position:relative; left: -50px; margin-top: 10px;">
                     <div class="clickableList">
-                        <button id="start-pause">
+                        <button class="action-button" id="start-pause">
                             <svg id="svgPlay" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
                                 <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/>
                             </svg>
@@ -212,18 +212,18 @@
                             </svg>
                         </button>
                     </div>
-                    <button id="reset">
+                    <button class="action-button" id="reset">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
                             <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
                         </svg>
                     </button>
-                    <button id="round-backward">
+                    <button class="action-button" id="round-backward">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-skip-backward" viewBox="0 0 16 16">
                             <path d="M.5 3.5A.5.5 0 0 1 1 4v3.248l6.267-3.636c.52-.302 1.233.043 1.233.696v2.94l6.267-3.636c.52-.302 1.233.043 1.233.696v7.384c0 .653-.713.998-1.233.696L8.5 8.752v2.94c0 .653-.713.998-1.233.696L1 8.752V12a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm7 1.133L1.696 8 7.5 11.367V4.633zm7.5 0L9.196 8 15 11.367V4.633z"/>
                         </svg>
                     </button>
-                    <button id="round-forward">
+                    <button class="action-button" id="round-forward">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-skip-forward" viewBox="0 0 16 16">
                             <path d="M15.5 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V8.752l-6.267 3.636c-.52.302-1.233-.043-1.233-.696v-2.94l-6.267 3.636C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696L7.5 7.248v-2.94c0-.653.713-.998 1.233-.696L15 7.248V4a.5.5 0 0 1 .5-.5zM1 4.633v6.734L6.804 8 1 4.633zm7.5 0v6.734L14.304 8 8.5 4.633z"/>
                         </svg>
@@ -323,6 +323,16 @@
                     </td>
                 </tr>
             </table>
+            <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" style="margin-top: 10px;" onClick="return confirm('Are you sure you want to finish this match?')">
+                <a href="{% url 'results' %}" style="text-decoration:none;">
+                    <div class="link">
+                        Finish Game
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16" style="margin-left: 6px;">
+                            <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
+                        </svg>
+                    </div>
+                </a>
+            </button>
         </div>
     </main>
 
@@ -533,7 +543,6 @@
            $('#svgPlay').toggle();
            $('#svgPause').toggle();
         });
-
     </script>
 
     <hr>

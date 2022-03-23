@@ -14,6 +14,7 @@ urlpatterns = [
     path('about/', jobs.views.about, name="about"),
     path('squire/', pokerfunc.views.squire, name="squire"),
     path('settings/', pokerfunc.views.settings, name="settings"),
+    path('results/', pokerfunc.views.results, name="results"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'jobs.views.error_404'
