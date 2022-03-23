@@ -47,18 +47,17 @@
 
         .floatLeft {
             position: relative;
-            left: -450px;
+            left: -100px;
         }
 
         .floatCenter {
             position: relative;
-            left: 400px;
+            left: -30px;
         }
 
         .floatRight {
             position: relative;
-            left: -60px;
-            margin-top: 10px;
+            left: -130px;
         }
 
         .base-timer {
@@ -123,13 +122,58 @@
         }
 
         button {
-            border: 3px solid #20c997;
+            border: 3px solid #87CEFA;
             background-color: #E0FFFF;
             border-radius: 50%;
             width: 60px;
             height: 60px;
             cursor: pointer;
         }
+
+        table {
+            border-collapse: separate;
+            border: solid #87CEFA 1px;
+            border-radius: 6px;
+            table-layout: fixed;
+        }
+
+        td,
+        th {
+            border-left: solid #87CEFA 1px;
+        }
+
+        th {
+            background-color: blue;
+            border-top: none;
+        }
+
+        td:first-child,
+        th:first-child {
+            border-left: none;
+        }
+
+        #player-table-container, #blind-display-container {
+            max-width: 400px;
+            padding: 5px;
+            margin: 0 auto;
+        }
+
+        #player-main-table, #current-round-table, #next-round-table {
+            width: 100%;
+            color: white;
+        }
+
+        #player-main-table th, #current-round-table th, #next-round-table th {
+            background: #4682B4;
+            padding: 7px;
+        }
+
+        #player-main-table td, #current-round-table td, #next-round-table td  {
+            background: #4a536b;
+            text-align: center;
+            padding: 7px;
+        }
+
     </style>
 
     <!-- Custom styles for this template -->
@@ -154,9 +198,10 @@
     </header>
     <hr>
     <main>
-        <div class="floatLeft" id="blind-table-container" style="width:33%; float: center; display: inline-block;">
-                <div id="app"></div>
-                <div class="action-list" style="position:relative; left: -168px; margin-top: 10px;">
+        <div class="floatLeft" id="blind-table-container" style="width:400px; float: center; display: inline-block; vertical-align: 100px;">
+            <h1 style="text-align: left; padding-left:20px;">  ROUND 1/15</h1>
+            <div id="app"></div>
+                <div class="action-list" style="position:relative; left: -50px; margin-top: 10px;">
                     <div class="clickableList">
                         <button id="start-pause">
                             <svg id="svgPlay" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
@@ -173,8 +218,111 @@
                             <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
                         </svg>
                     </button>
+                    <button id="round-backward">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-skip-backward" viewBox="0 0 16 16">
+                            <path d="M.5 3.5A.5.5 0 0 1 1 4v3.248l6.267-3.636c.52-.302 1.233.043 1.233.696v2.94l6.267-3.636c.52-.302 1.233.043 1.233.696v7.384c0 .653-.713.998-1.233.696L8.5 8.752v2.94c0 .653-.713.998-1.233.696L1 8.752V12a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm7 1.133L1.696 8 7.5 11.367V4.633zm7.5 0L9.196 8 15 11.367V4.633z"/>
+                        </svg>
+                    </button>
+                    <button id="round-forward">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-skip-forward" viewBox="0 0 16 16">
+                            <path d="M15.5 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V8.752l-6.267 3.636c-.52.302-1.233-.043-1.233-.696v-2.94l-6.267 3.636C.713 12.69 0 12.345 0 11.692V4.308c0-.653.713-.998 1.233-.696L7.5 7.248v-2.94c0-.653.713-.998 1.233-.696L15 7.248V4a.5.5 0 0 1 .5-.5zM1 4.633v6.734L6.804 8 1 4.633zm7.5 0v6.734L14.304 8 8.5 4.633z"/>
+                        </svg>
+                    </button>
                 </div>
                 <audio id="timeout_audio"></audio>
+        </div>
+        <div class="floatCenter" id="blind-display-container" style="width:33%; float: center; display: inline-block; vertical-align: 250px;">
+            <div>
+                <table id="current-round-table" cellspacing="0">
+                    <th colspan="3">Current Round</th>
+                    <tr>
+                        <td>
+                            Small Blind
+                        </td>
+                        <td>
+                            Big Blind
+                        </td>
+                        <td>
+                            Ante
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h1>
+                                25
+                            </h1>
+                        </td>
+                        <td>
+                            <h1>
+                                50
+                            </h1>
+                        </td>
+                        <td>
+                            <h1>
+                                0
+                            </h1>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <br>
+                <br>
+                <table id="next-round-table" cellspacing="0">
+                    <th colspan="3">Next Round</th>
+                        <tr>
+                            <td>
+                                Small Blind
+                            </td>
+                            <td>
+                                Big Blind
+                            </td>
+                            <td>
+                                Ante
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h1>
+                                    25
+                                </h1>
+                            </td>
+                            <td>
+                                <h1>
+                                    50
+                                </h1>
+                            </td>
+                            <td>
+                                <h1>
+                                    0
+                                </h1>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+        <div class="floatRight" id="player-table-container" style="width:33%; float: right; display: inline-block; margin-top: 60px;">
+            <table id="player-main-table" cellspacing="0">
+                <th colspan="2">Prize Tracker</th>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        Rebuy Count
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h4>
+                            Player 1
+                        </h4>
+                    </td>
+                    <td>
+                        <input type="number" size="5" value="Player 1" style="text-align:center;">
+                    </td>
+                </tr>
+            </table>
         </div>
     </main>
 
@@ -183,7 +331,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <script>
-        // Credit: Mateusz Rybczonec (timer/aniation) / Pedro Raimundo (action buttons integration)
+        // Credit: Mateusz Rybczonec (timer/animation) / Pedro Raimundo (action buttons integration)
 
         // variables related to the timer animation
         const FULL_DASH_ARRAY = 283;
