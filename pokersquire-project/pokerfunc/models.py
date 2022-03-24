@@ -38,7 +38,15 @@ def timer_controls():
 
 # process_player_data takes care of the array of player data being entered pre-game
 def process_player_data():
-    player_data = ""
+
+    player_name = ""
+    player_rebuys = ""
+
+    player_data = {
+        "name": player_name,
+        "rebuys": player_rebuys
+    }
+
     return player_data
 
 

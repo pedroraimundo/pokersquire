@@ -166,124 +166,137 @@
     </header>
     <hr>
     <main>
-        <div style="display:block; width:100%;">
-        <!-- Column for blind config -->
-        <div class="floatLeft" id="blind-table-container" style="width:33%; float: left; display: inline-block;">
-            <table id="blind-main-table" cellspacing="0">
-                <th colspan="6">Blind Setup</th>
-                <tr>
-                    <td>
-                        <!-- Column for table number -->
-                    </td>
-                    <td>
-                        Duration (minutes)
-                    </td>
-                    <td>
-                        Small Blind
-                    </td>
-                    <td>
-                        Big Blind
-                    </td>
-                    <td>
-                        Ante
-                    </td>
-                    <td>
-                        <!-- Column for the remove round button -->
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        <input type="number" size="5" value="15" style="text-align:center;">
-                    </td>
-                    <td>
-                        <input type="number" size="5" value="25" style="text-align:center;">
-                    </td>
-                    <td>
-                        <input type="number" size="5" value="50" style="text-align:center;">
-                    </td>
-                    <td>
-                        <input type="number" size="5" value="0" style="text-align:center;">
-                    </td>
-                    <td>
-                        <button class="btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold" onClick="alert('No additional rows can be deleted.')"> - </button>
-                    </td>
-                </tr>
-            </table>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-left">
-                <button id="add-round" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
-            </div>
-        </div>
-
-        <!-- Column for player config -->
-        <div class="floatCenter" id="player-table-container" style="width:33%; float: left; display: inline-block; margin-left: 80px;">
-            <table id="player-main-table" cellspacing="0">
-                <th colspan="3">Player List</th>
-                <tr>
-                    <td>
-                        <!-- Column for outline draw -->
-                    </td>
-                    <td>
-                        <!-- Column for outline draw -->
-                    </td>
-                    <td>
-                        <!-- Column for outline draw -->
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <!-- Column for outline draw -->
-                    </td>
-                    <td>
-                        <input type="text" size="20" value="Player 1" style="text-align:center;">
-                    </td>
-                    <td>
-                        <button class="btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold" onClick="alert('No additional players can be removed.')"> - </button>
-                    </td>
-                </tr>
-            </table>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-left">
-                <button id="add-player" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
-            </div>
-        </div>
-
-        <div class="floatRight" style="width:28%; float: right; display: inline-block;">
-            <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
-                <a href="{% url 'squire' %}" style="text-decoration:none;">
-                    <div class="link">
-                        Start
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-play-fill" viewBox="0 1 15 16">
-                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
-                        </svg>
+        <form action="{% url 'squire' %}">
+            <div style="display:block; width:100%;">
+                <!-- Column for blind config -->
+                <div class="floatLeft" id="blind-table-container" style="width:33%; float: left; display: inline-block;">
+                    <table id="blind-main-table" cellspacing="0">
+                        <th colspan="6">Blind Setup</th>
+                        <tr>
+                            <td>
+                                <!-- Column for table number -->
+                            </td>
+                            <td>
+                                Duration (minutes)
+                            </td>
+                            <td>
+                                Small Blind
+                            </td>
+                            <td>
+                                Big Blind
+                            </td>
+                            <td>
+                                Ante
+                            </td>
+                            <td>
+                                <!-- Column for the remove round button -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                <input type="number" size="5" value="15" style="text-align:center;">
+                            </td>
+                            <td>
+                                <input type="number" size="5" value="25" style="text-align:center;">
+                            </td>
+                            <td>
+                                <input type="number" size="5" value="50" style="text-align:center;">
+                            </td>
+                            <td>
+                                <input type="number" size="5" value="0" style="text-align:center;">
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold" onClick="alert('No additional rows can be deleted.')"> - </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-left">
+                        <button id="add-round" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
                     </div>
-                </a>
-            </button>
-        </div>
-
-        <div class="floatRight" style="width:28%; float: right; display: inline-block;">
-            <button type="button"  id="set-blind-defaults" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" >
-                <div class="link">
-                    Defaults
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-wrench" viewBox="0 1 15 16">
-                        <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"/>
-                    </svg>
                 </div>
-            </button>
-        </div>
 
-        <div class="floatRight" style="width:28%; float: right; display: inline-block;">
-            <button type="button" id="clear-settings" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
-                <div class="link">
-                    Clear
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eraser-fill" viewBox="0 1 15 16">
-                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                    </svg>
+                <!-- Column for player config -->
+                <div class="floatCenter" id="player-table-container" style="width:33%; float: left; display: inline-block; margin-left: 80px;">
+                    <table id="player-main-table" cellspacing="0">
+                        <th colspan="3">Player List</th>
+                        <tr>
+                            <td>
+                                <!-- Column for outline draw -->
+                            </td>
+                            <td>
+                                <!-- Column for outline draw -->
+                            </td>
+                            <td>
+                                <!-- Column for outline draw -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- Column for outline draw -->
+                            </td>
+                            <td>
+                                <input type="text" size="20" value="{{ player_data.player_name }}" name="player_name" style="text-align:center;">
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold" onClick="alert('No additional players can be removed.')" style="margin-left: 10px"> - </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-left">
+                        <button id="add-player" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
+                    </div>
                 </div>
-            </button>
-        </div>
-    </div>
+
+                <div class="floatRight" style="width:28%; float: right; display: inline-block;">
+                    <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
+                        <a href="{% url 'squire' %}" style="text-decoration:none;">
+                            <div class="link">
+                                Start
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-play-fill" viewBox="0 1 15 16">
+                                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </button>
+                </div>
+
+                <div class="floatRight" style="width:28%; float: right; display: inline-block;">
+                    <button type="button"  id="set-blind-defaults" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" >
+                        <div class="link">
+                            Defaults
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-wrench" viewBox="0 1 15 16">
+                                <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"/>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="floatRight" style="width:28%; float: right; display: inline-block;">
+                    <button type="button" id="clear-settings" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
+                        <div class="link">
+                            Clear
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eraser-fill" viewBox="0 1 15 16">
+                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="floatRight" style="width:28%; float: right; display: inline-block;">
+                    <button type="submit" id="save-settings" name="save" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
+                        <div class="link">
+                            Save Settings
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16" style="margin-left: 3px">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </form>
     </main>
 
     <!-- JavaScript Bundle with Popper -->
@@ -454,6 +467,7 @@
 
         player_column3text.setAttribute("class", "btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold");
         player_column3text.setAttribute("onClick", "removePlayerTableRow();");
+        player_column3text.setAttribute("style", "margin-left: 10px");
         player_column3text.appendChild(player_column3_button_text);
         player_column3.appendChild(player_column3text);
 
