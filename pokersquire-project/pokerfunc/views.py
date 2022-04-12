@@ -7,7 +7,9 @@ def squire(request):
     data = request.POST.items()
 
     context = dict([(key, value) for key, value in data])
-    print(context.keys(), ":", context.values())
+
+    for key, value in context.items():
+        print(key, ':', value)
 
     return render(request, 'squire.html', {'context': context})
 
