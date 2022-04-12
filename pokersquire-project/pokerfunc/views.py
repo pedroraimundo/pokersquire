@@ -1,51 +1,19 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
 
 
 def squire(request):
 
-    player_name = request.GET['player_name']
+    data = request.POST.items()
 
-    context = {
-        "player_name": player_name
-    }
-    return render(request, 'squire.html', context)
+    context = dict([(key, value) for key, value in data])
+    print(context.keys(), ":", context.values())
+
+    return render(request, 'squire.html', {'context': context})
 
 
 def settings(request):
-
-    # blind setup functionality
-    blind_duration = ""
-    small_blind_value = ""
-    big_blind_value = ""
-    ante_value = ""
-    round_number = ""
-    total_rounds = ""
-
-    blind_data = {
-        "blind_duration": blind_duration,
-        "small_blind_value": small_blind_value,
-        "big_blind_value": big_blind_value,
-        "ante_value": ante_value,
-        "round_number": round_number,
-        "total_rounds": total_rounds
-    }
-
-    # player setup functionality
-    player_name = "Pedro"
-    total_players = ""
-
-    player_data = {
-        "player_name": player_name,
-        "total_players": total_players
-    }
-
-    # context dictionary to be used to pass data to the settings page
-    context = {
-        'player_data': player_data,
-        "blind_data": blind_data
-    }
-
-    return render(request, 'settings.html', context)
+    return render(request, 'settings.html')
 
 
 def results(request):

@@ -8,8 +8,6 @@
     <meta name="generator" content="Hugo 0.88.1">
     <title>Game Settings @ PokerSquire</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/heroes/">
-
     <!-- Bootstrap core CSS -->
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -22,7 +20,6 @@
     <link rel="mask-icon" href="/docs/5.1/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
     <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon.ico">
     <meta name="theme-color" content="#7952b3">
-
 
     <style>
         .bd-placeholder-img {
@@ -146,7 +143,7 @@
     </style>
 
     <!-- Custom styles for this template -->
-    <link href="heroes.css" rel="stylesheet">
+    <!--  <link href="heroes.css" rel="stylesheet"> -->
 </head>
 <body class="d-flex h-100 text-center text-white bg-dark">
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
@@ -166,7 +163,8 @@
     </header>
     <hr>
     <main>
-        <form action="{% url 'squire' %}">
+        <form action="/squire/" method="post">
+            {% csrf_token %}
             <div style="display:block; width:100%;">
                 <!-- Column for blind config -->
                 <div class="floatLeft" id="blind-table-container" style="width:33%; float: left; display: inline-block;">
@@ -197,16 +195,16 @@
                                 1
                             </td>
                             <td>
-                                <input type="number" size="5" value="15" style="text-align:center;">
+                                <input type="number" size="5" value="15" name="blind_duration_1" style="text-align:center;">
                             </td>
                             <td>
-                                <input type="number" size="5" value="25" style="text-align:center;">
+                                <input type="number" size="5"  name="small_blind_value_1" value="25" style="text-align:center;">
                             </td>
                             <td>
-                                <input type="number" size="5" value="50" style="text-align:center;">
+                                <input type="number" size="5" value="50" name="big_blind_value_1" style="text-align:center;">
                             </td>
                             <td>
-                                <input type="number" size="5" value="0" style="text-align:center;">
+                                <input type="number" size="5" value="0" name="ante_value_1" style="text-align:center;">
                             </td>
                             <td>
                                 <button class="btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold" onClick="alert('No additional rows can be deleted.')"> - </button>
@@ -214,7 +212,7 @@
                         </tr>
                     </table>
                     <div class="d-grid gap-2 d-sm-flex justify-content-sm-left">
-                        <button id="add-round" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
+                        <button id="add-round" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
                     </div>
                 </div>
 
@@ -238,7 +236,7 @@
                                 <!-- Column for outline draw -->
                             </td>
                             <td>
-                                <input type="text" size="20" value="{{ player_data.player_name }}" name="player_name" style="text-align:center;">
+                                <input type="text" size="20" value="Player 1" name="player_name_1" style="text-align:center;">
                             </td>
                             <td>
                                 <button class="btn btn-outline-info btn-sm px-3 me-sm-1 fw-bold" onClick="alert('No additional players can be removed.')" style="margin-left: 10px"> - </button>
@@ -246,20 +244,18 @@
                         </tr>
                     </table>
                     <div class="d-grid gap-2 d-sm-flex justify-content-sm-left">
-                        <button id="add-player" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
+                        <button id="add-player" type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"> + </button>
                     </div>
                 </div>
 
                 <div class="floatRight" style="width:28%; float: right; display: inline-block;">
-                    <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
-                        <a href="{% url 'squire' %}" style="text-decoration:none;">
-                            <div class="link">
-                                Start
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-play-fill" viewBox="0 1 15 16">
-                                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
-                                </svg>
-                            </div>
-                        </a>
+                    <button type="submit"  value="Save Settings" id="start-match" name="start-match" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
+                        <div class="link">
+                            Start
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-play-fill" viewBox="0 1 15 16">
+                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                            </svg>
+                        </div>
                     </button>
                 </div>
 
@@ -280,17 +276,6 @@
                             Clear
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eraser-fill" viewBox="0 1 15 16">
                                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                            </svg>
-                        </div>
-                    </button>
-                </div>
-
-                <div class="floatRight" style="width:28%; float: right; display: inline-block;">
-                    <button type="submit" id="save-settings" name="save" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">
-                        <div class="link">
-                            Save Settings
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16" style="margin-left: 3px">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                             </svg>
                         </div>
                     </button>
@@ -373,6 +358,7 @@
         blind_column2text.setAttribute("size", "5");
         blind_column2text.setAttribute("value", blind_duration);
         blind_column2text.setAttribute("style", "text-align:center;");
+        blind_column2text.setAttribute("name", "blind_duration_round_" + round_num);
         blind_column2.appendChild(blind_column2text);
 
         // similar setup for additional columns
@@ -383,6 +369,7 @@
         blind_column3text.setAttribute("size", "5");
         blind_column3text.setAttribute("value", small_blind);
         blind_column3text.setAttribute("style", "text-align:center;");
+        blind_column3text.setAttribute("name", "small_blind_value_" + round_num);
         blind_column3.appendChild(blind_column3text);
 
         // similar setup for additional columns
@@ -393,6 +380,7 @@
         blind_column4text.setAttribute("size", "5");
         blind_column4text.setAttribute("value", big_blind);
         blind_column4text.setAttribute("style", "text-align:center;");
+        blind_column3text.setAttribute("name", "big_blind_value_" + round_num);
         blind_column4.appendChild(blind_column4text);
 
         // similar setup for additional columns
@@ -403,6 +391,7 @@
         blind_column5text.setAttribute("size", "5");
         blind_column5text.setAttribute("value", ante);
         blind_column5text.setAttribute("style", "text-align:center;");
+        blind_column3text.setAttribute("name", "ante_value_" + round_num);
         blind_column5.appendChild(blind_column5text);
 
         // similar setup for additional columns
@@ -458,6 +447,7 @@
         player_column2text.setAttribute("size", "20");
         player_column2text.setAttribute("value", player_name);
         player_column2text.setAttribute("style", "text-align:center;");
+        player_column2text.setAttribute("name", "player_name_" + player_num);
         player_column2.appendChild(player_column2text);
 
         // similar setup for additional columns
