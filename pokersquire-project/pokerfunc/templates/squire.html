@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>About @ PokerSquire</title>
+    <title>Match @ PokerSquire</title>
 
     <!-- Bootstrap core CSS -->
     <!-- CSS only -->
@@ -44,13 +44,13 @@
         }
 
         .floatLeft {
-            position: relative;
-            left: -100px;
+            position: fixed;
+            left: 140px;
         }
 
         .floatCenter {
             position: relative;
-            left: -30px;
+            left: 150px;
         }
 
         .floatRight {
@@ -151,7 +151,7 @@
         }
 
         #player-table-container, #blind-display-container {
-            max-width: 400px;
+            max-width: 530px;
             padding: 5px;
             margin: 0 auto;
         }
@@ -194,8 +194,8 @@
     </header>
     <hr>
     <main>
-        <div class="floatLeft" id="blind-table-container" style="width:400px; float: center; display: inline-block; vertical-align: 100px;">
-            <h1 style="text-align: left; padding-left:20px;">  ROUND 1/15</h1>
+        <div class="floatLeft" id="blind-table-container" style="width:400px; float: center; display: inline-block; vertical-align: 100px; position: fixed;">
+            <h1 style="text-align: left; padding-left:55px;">TIME LEFT</h1>
             <div id="app"></div>
                 <div class="action-list" style="position:relative; left: -50px; margin-top: 10px;">
                     <div class="clickableList">
@@ -230,8 +230,11 @@
         <div class="floatCenter" id="blind-display-container" style="width:33%; float: center; display: inline-block; vertical-align: 250px;">
             <div>
                 <table id="current-round-table" cellspacing="0">
-                    <th colspan="3">Current Round</th>
+                    <th colspan="4">Blind Setup</th>
                     <tr>
+                        <td>
+                            Current Round
+                        </td>
                         <td>
                             Small Blind
                         </td>
@@ -244,60 +247,50 @@
                     </tr>
                     <tr>
                         <td>
-                            <h1>
-                                {{ context.small_blind_value_1 }}
-                            </h1>
+                            {% for key, value in match_setup_dict.items %}
+                            {% if "round_number_" in key %}
+                            <div style="color: red;">
+                                <h1>
+                                    {{ value }}
+                                </h1>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
                         </td>
                         <td>
-                            <h1>
-                                {{ context.big_blind_value_1 }}
-                            </h1>
+                            {% for key, value in match_setup_dict.items %}
+                            {% if "small_blind_value_" in key %}
+                            <div>
+                                <h1>
+                                    {{ value }}
+                                </h1>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
                         </td>
                         <td>
+                            {% for key, value in match_setup_dict.items %}
+                            {% if "big_blind_value_" in key %}
                             <h1>
-                                {{ context.ante_value_1 }}
+                                {{ value }}
                             </h1>
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for key, value in match_setup_dict.items %}
+                            {% if "ante_value_" in key %}
+                            <h1>
+                                {{ value }}
+                            </h1>
+                            {% endif %}
+                            {% endfor %}
                         </td>
                     </tr>
                 </table>
             </div>
-            <div>
-                <br>
-                <br>
-                <table id="next-round-table" cellspacing="0">
-                    <th colspan="3">Next Round</th>
-                        <tr>
-                            <td>
-                                Small Blind
-                            </td>
-                            <td>
-                                Big Blind
-                            </td>
-                            <td>
-                                Ante
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h1>
-                                    {{ context.small_blind_value_2 }}
-                                </h1>
-                            </td>
-                            <td>
-                                <h1>
-                                    {{ context.big_blind_value_2 }}
-                                </h1>
-                            </td>
-                            <td>
-                                <h1>
-                                    {{ context.ante_value_2 }}
-                                </h1>
-                            </td>
-                        </tr>
-                </table>
-            </div>
         </div>
-        <div class="floatRight" id="player-table-container" style="width:33%; float: right; display: inline-block; margin-top: 60px;">
+        <div class="floatRight" id="player-table-container" style="width:33%; float: right; display: inline-block; margin-top: 0px;">
             <table id="player-main-table" cellspacing="0">
                 <th colspan="2">Prize Tracker</th>
                 <tr>
@@ -308,16 +301,20 @@
                         Rebuy Count
                     </td>
                 </tr>
+                {% for key, value in match_setup_dict.items %}
+                {% if "player_name_" in key %}
                 <tr>
                     <td>
                         <h4>
-                            {{ context.player_name_1 }}
+                            {{ value }}
                         </h4>
                     </td>
                     <td>
                         <input type="number" size="5" value="1" style="text-align:center;">
                     </td>
                 </tr>
+                {% endif %}
+                {% endfor %}
             </table>
             <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" style="margin-top: 10px;" onClick="return confirm('Are you sure you want to finish this match?')">
                 <a href="{% url 'results' %}" style="text-decoration:none;">
@@ -337,6 +334,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <script>
+        // function to change td color
+        function isCurrentRound() {
+          let confirmation = confirm("Current timer will be reset. Continue?");
+          if (confirmation == true) {
+            resetTimer();
+          }
+        }
+
+        // Timer logic
         // Credit: Mateusz Rybczonec (timer/animation) / Pedro Raimundo (action buttons integration)
 
         // variables related to the timer animation
